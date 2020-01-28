@@ -10,6 +10,17 @@ describe "Items API" do
 
     items = JSON.parse(response.body)
 
-    expect(Item.count).to eq(3)
+    expect(items.count).to eq(3)
+  end
+
+  it "sends a single item" do
+    id = create(:item).id
+
+    get "/api/v1/items/#{id}"
+
+    item = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(item["id"]).to eq(id)
   end
 end
